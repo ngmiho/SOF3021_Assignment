@@ -1,5 +1,7 @@
 package com.poly.controller;
 
+import java.util.Iterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -51,6 +53,19 @@ public class UserController {
 
 		model.addAttribute("user", user);
 
+		return "user/login";
+	}
+	
+	@PostMapping("account/login")
+	public String postLogin(Model model, @ModelAttribute("user") User user) {
+
+		for (User u : userService.findAll())
+			if (u.getName().equals(user.getName()) && passwordEncoder.matches(user.getPassword(), u.getPassword())) {
+				sessionService.setAttribute("currentUser", u);
+				return "user/login";
+			}
+
+		model.addAttribute("message", "Invalid information!");
 		return "user/login";
 	}
 	

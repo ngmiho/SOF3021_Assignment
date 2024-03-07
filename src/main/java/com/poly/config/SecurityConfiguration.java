@@ -49,7 +49,7 @@ public class SecurityConfiguration {
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(req -> req
 						.requestMatchers("/account/profile", "/account/change-password", "/cart/**", "/checkout/**", "/order/**").authenticated()
-						.requestMatchers("/admin/**").hasRole("ADMIN")
+						//.requestMatchers("/admin/**").hasRole("ADMIN")
 						.anyRequest().permitAll())
 				.formLogin(form -> form
 						.loginPage("/account/login")
